@@ -1,8 +1,9 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useStore } from '../store/useStore';
 import { FiSearch, FiFilter, FiPlus, FiEdit2, FiTrash2, FiArrowUp, FiArrowDown } from 'react-icons/fi';
 import { format, parseISO } from 'date-fns';
 import { TransactionModal } from './TransactionModal';
+import gsap from 'gsap';
 
 export function TransactionManager() {
   const {
@@ -19,6 +20,10 @@ export function TransactionManager() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
+  const addBtnRef = useRef(null);
+  const actionColRefs = useRef([]);
+  const tableContainerRef = useRef(null);
+  const prevRoleRef = useRef(role);
 
   const categories = useMemo(() => {
     const cats = new Set(transactions.map((t) => t.category));
@@ -47,13 +52,106 @@ export function TransactionManager() {
     return result;
   }, [transactions, searchQuery, activeCategory, sortBy]);
 
+  // Animate admin elements when role changes
+  useEffect(() => {
+    if (prevRoleRef.current === role) return;
+    prevRoleRef.current = role;
+
+    const isAdmin = role === 'admin';
+
+    // Animate the "Add Transaction" button
+    if (addBtnRef.current) {
+      if (isAdmin) {
+        gsap.set(addBtnRef.current, { display: 'flex' });
+        gsap.fromTo(
+          addBtnRef.current,
+          {
+            opacity: 0,
+            scale: 0.8,
+            x: 30,
+          },
+          {
+            opacity: 1,
+            scale: 1,
+            x: 0,
+            duration: 0.6,
+            ease: 'back.out(2)',
+            delay: 0.3,
+          }
+        );
+      } else {
+        gsap.to(addBtnRef.current, {
+          opacity: 0,
+          scale: 0.8,
+          x: 30,
+          duration: 0.3,
+          ease: 'power2.in',
+          onComplete: () => {
+            gsap.set(addBtnRef.current, { display: 'none' });
+          },
+        });
+      }
+    }
+
+    // Animate action columns with stagger
+    const actionEls = actionColRefs.current.filter(Boolean);
+    if (actionEls.length > 0) {
+      if (isAdmin) {
+        actionEls.forEach((el) => gsap.set(el, { display: 'flex' }));
+        gsap.fromTo(
+          actionEls,
+          { opacity: 0, x: 20 },
+          {
+            opacity: 1,
+            x: 0,
+            stagger: 0.03,
+            duration: 0.4,
+            ease: 'power3.out',
+            delay: 0.4,
+          }
+        );
+      } else {
+        gsap.to(actionEls, {
+          opacity: 0,
+          x: 20,
+          stagger: 0.02,
+          duration: 0.25,
+          ease: 'power2.in',
+          onComplete: () => {
+            actionEls.forEach((el) => gsap.set(el, { display: 'none' }));
+          },
+        });
+      }
+    }
+
+    // Subtle table container flash
+    if (tableContainerRef.current) {
+      gsap.fromTo(
+        tableContainerRef.current,
+        { borderColor: isAdmin ? 'rgba(99,102,241,0.3)' : 'rgba(16,185,129,0.3)' },
+        {
+          borderColor: 'transparent',
+          duration: 1.5,
+          ease: 'power2.out',
+          delay: 0.2,
+        }
+      );
+    }
+  }, [role]);
+
   const handleEdit = (t) => {
     setEditingTransaction(t);
     setIsModalOpen(true);
   };
 
+  const isAdmin = role === 'admin';
+
   return (
-    <div className="card rounded-2xl shadow-sm overflow-hidden mb-8">
+    <div
+      ref={tableContainerRef}
+      className="card rounded-2xl shadow-sm overflow-hidden mb-8"
+      style={{ border: '2px solid transparent', transition: 'none' }}
+    >
       <div className="p-6 border-b flex flex-col xl:flex-row gap-4 justify-between items-center">
         <div className="flex-1 w-full flex flex-col sm:flex-row gap-4">
           <div className="relative flex-1 max-w-md">
@@ -96,18 +194,19 @@ export function TransactionManager() {
           </div>
         </div>
 
-        {role === 'admin' && (
-          <button
-            onClick={() => {
-              setEditingTransaction(null);
-              setIsModalOpen(true);
-            }}
-            className="w-full xl:w-auto flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors cursor-pointer shadow-md shadow-blue-500/20 whitespace-nowrap"
-          >
-            <FiPlus className="w-4 h-4" />
-            Add Transaction
-          </button>
-        )}
+        {/* Add Transaction Button — always in DOM, visibility controlled by GSAP */}
+        <button
+          ref={addBtnRef}
+          onClick={() => {
+            setEditingTransaction(null);
+            setIsModalOpen(true);
+          }}
+          className="w-full xl:w-auto items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors cursor-pointer shadow-md shadow-blue-500/20 whitespace-nowrap"
+          style={{ display: isAdmin ? 'flex' : 'none' }}
+        >
+          <FiPlus className="w-4 h-4" />
+          Add Transaction
+        </button>
       </div>
 
       <div className="overflow-x-auto">
@@ -119,13 +218,18 @@ export function TransactionManager() {
               <th className="px-6 py-4">Category</th>
               <th className="px-6 py-4">Type</th>
               <th className="px-6 py-4 text-right">Amount</th>
-              {role === 'admin' && <th className="px-6 py-4 text-right">Actions</th>}
+              <th
+                className="px-6 py-4 text-right"
+                style={{ display: isAdmin ? 'table-cell' : 'none' }}
+              >
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
             {filteredAndSortedTransactions.length === 0 ? (
               <tr>
-                <td colSpan={role === 'admin' ? 6 : 5} className="px-6 py-12 text-center text-muted-foreground">
+                <td colSpan={isAdmin ? 6 : 5} className="px-6 py-12 text-center text-muted-foreground">
                   <div className="flex flex-col items-center justify-center">
                     <div className="w-16 h-16 rounded-2xl bg-muted mb-4 flex items-center justify-center border">
                       <FiSearch className="w-6 h-6 text-muted-foreground" />
@@ -136,7 +240,7 @@ export function TransactionManager() {
                 </td>
               </tr>
             ) : (
-              filteredAndSortedTransactions.map((t) => (
+              filteredAndSortedTransactions.map((t, index) => (
                 <tr key={t.id} className="hover:bg-muted/30 transition-colors group">
                   <td className="px-6 py-4 font-medium text-foreground/80">
                     {format(parseISO(t.date), 'MMM dd, yyyy')}
@@ -166,24 +270,32 @@ export function TransactionManager() {
                     {t.type === 'Income' ? '+' : '-'}$
                     {t.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                   </td>
-                  {role === 'admin' && (
-                    <td className="px-6 py-4 text-right">
-                      <div className="flex items-center justify-end gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
-                        <button
-                          onClick={() => handleEdit(t)}
-                          className="p-1.5 text-muted-foreground hover:text-primary hover:bg-muted rounded-md transition-colors cursor-pointer"
-                        >
-                          <FiEdit2 className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={() => deleteTransaction(t.id)}
-                          className="p-1.5 text-muted-foreground hover:text-destructive hover:bg-muted rounded-md transition-colors cursor-pointer"
-                        >
-                          <FiTrash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </td>
-                  )}
+
+                  {/* Actions column — always in DOM, animated via GSAP */}
+                  <td
+                    className="px-6 py-4 text-right"
+                    style={{ display: isAdmin ? 'table-cell' : 'none' }}
+                  >
+                    <div
+                      ref={(el) => {
+                        actionColRefs.current[index] = el;
+                      }}
+                      className="flex items-center justify-end gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
+                    >
+                      <button
+                        onClick={() => handleEdit(t)}
+                        className="p-1.5 text-muted-foreground hover:text-primary hover:bg-muted rounded-md transition-colors cursor-pointer"
+                      >
+                        <FiEdit2 className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => deleteTransaction(t.id)}
+                        className="p-1.5 text-muted-foreground hover:text-destructive hover:bg-muted rounded-md transition-colors cursor-pointer"
+                      >
+                        <FiTrash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               ))
             )}
@@ -199,4 +311,3 @@ export function TransactionManager() {
     </div>
   );
 }
-

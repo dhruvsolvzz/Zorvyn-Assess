@@ -2,7 +2,6 @@
 
 A premium, high-fidelity personal finance dashboard built with **React**, **Vite**, and **GSAP**. Featuring a modern bento-grid layout, smooth scrolling, and interactive data visualizations.
 
-![Dashboard Preview](https://images.unsplash.com/photo-1551288049-bbda4865cda0?auto=format&fit=crop&q=80&w=2070)
 
 ## ✨ Features
 

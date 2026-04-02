@@ -1,11 +1,12 @@
 import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FiArrowRight } from 'react-icons/fi';
 import { Button } from './button';
 import { TracingBeam } from './tracing-beam';
-import { getLenis } from '@/hooks/useLenis';
 import gsap from 'gsap';
 
 export const Hero195 = () => {
+  const navigate = useNavigate();
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
   const buttonsRef = useRef(null);
@@ -67,14 +68,7 @@ export const Hero195 = () => {
   };
 
   const handleDashboardClick = () => {
-    const lenis = getLenis();
-    if (lenis) {
-      lenis.scrollTo('#dashboard', {
-        offset: -80,
-        duration: 1.5,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      });
-    }
+    navigate('/dashboard');
   };
 
   return (

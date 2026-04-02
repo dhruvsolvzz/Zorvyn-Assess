@@ -1,15 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FiX } from 'react-icons/fi';
 import { useStore } from '../store/useStore';
+import gsap from 'gsap';
 
 export function TransactionModal({ isOpen, onClose, transactionToEdit }) {
   const { addTransaction, updateTransaction } = useStore();
+  const [visible, setVisible] = useState(false);
 
   const [date, setDate] = useState('');
   const [amount, setAmount] = useState('');
   const [category, setCategory] = useState('');
   const [type, setType] = useState('Expense');
   const [description, setDescription] = useState('');
+
+  const overlayRef = useRef(null);
+  const panelRef = useRef(null);
 
   useEffect(() => {
     if (transactionToEdit) {
@@ -27,7 +32,70 @@ export function TransactionModal({ isOpen, onClose, transactionToEdit }) {
     }
   }, [transactionToEdit, isOpen]);
 
-  if (!isOpen) return null;
+  // GSAP entrance
+  useEffect(() => {
+    if (isOpen) {
+      setVisible(true);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!visible) return;
+
+    const overlay = overlayRef.current;
+    const panel = panelRef.current;
+    if (!overlay || !panel) return;
+
+    if (isOpen) {
+      const tl = gsap.timeline();
+      tl.fromTo(
+        overlay,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.3, ease: 'power2.out' }
+      ).fromTo(
+        panel,
+        { opacity: 0, scale: 0.92, y: 30 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 0.45,
+          ease: 'back.out(1.7)',
+        },
+        '-=0.15'
+      );
+    }
+  }, [visible, isOpen]);
+
+  const handleClose = () => {
+    const overlay = overlayRef.current;
+    const panel = panelRef.current;
+    if (!overlay || !panel) {
+      onClose();
+      return;
+    }
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        setVisible(false);
+        onClose();
+      },
+    });
+
+    tl.to(panel, {
+      opacity: 0,
+      scale: 0.92,
+      y: 20,
+      duration: 0.25,
+      ease: 'power2.in',
+    }).to(
+      overlay,
+      { opacity: 0, duration: 0.2, ease: 'power2.in' },
+      '-=0.1'
+    );
+  };
+
+  if (!visible && !isOpen) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,18 +117,29 @@ export function TransactionModal({ isOpen, onClose, transactionToEdit }) {
         description,
       });
     }
-    onClose();
+    handleClose();
   };
 
   return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="bg-card text-card-foreground rounded-2xl shadow-xl w-full max-w-md border overflow-hidden">
+    <div
+      ref={overlayRef}
+      className="fixed inset-0 z-100 flex items-center justify-center p-4"
+      style={{ backgroundColor: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)', opacity: 0 }}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) handleClose();
+      }}
+    >
+      <div
+        ref={panelRef}
+        className="bg-card text-card-foreground rounded-2xl shadow-xl w-full max-w-md border overflow-hidden"
+        style={{ opacity: 0 }}
+      >
         <div className="flex justify-between items-center p-6 border-b">
           <h2 className="text-xl font-bold">
             {transactionToEdit ? 'Edit Transaction' : 'Add Transaction'}
           </h2>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="p-2 hover:bg-muted rounded-full transition-colors cursor-pointer"
           >
             <FiX className="w-5 h-5 text-muted-foreground" />
@@ -132,7 +211,7 @@ export function TransactionModal({ isOpen, onClose, transactionToEdit }) {
           <div className="mt-6 flex gap-3 pt-4">
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleClose}
               className="flex-1 px-4 py-2.5 bg-muted hover:bg-muted/80 text-foreground rounded-lg font-medium transition-colors cursor-pointer"
             >
               Cancel
@@ -149,4 +228,3 @@ export function TransactionModal({ isOpen, onClose, transactionToEdit }) {
     </div>
   );
 }
-

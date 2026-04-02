@@ -122,3 +122,9 @@
   }
 }
 
+/* ─── Page Transition Helpers ──────────────────────────────────────── */
+.page-transition {
+  will-change: opacity, transform, filter;
+  min-height: calc(100vh - 10rem);
+}
+
