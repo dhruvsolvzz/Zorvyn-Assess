@@ -109,7 +109,7 @@ export function TransactionModal({ isOpen, onClose, transactionToEdit }) {
       });
     } else {
       addTransaction({
-        id: Math.random().toString(36).substr(2, 9),
+        id: crypto.randomUUID(),
         date,
         amount: parseFloat(amount),
         category,

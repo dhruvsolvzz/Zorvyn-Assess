@@ -53,7 +53,12 @@ export function SummaryCards() {
     return days.map(day => {
       return transactions
         .filter(t => (type === 'Balance' ? true : t.type === type) && isSameDay(parseISO(t.date), day))
-        .reduce((sum, t) => sum + (type === 'Expense' ? t.amount : t.type === 'Income' ? t.amount : t.type === 'Income' ? t.amount : -t.amount), 0);
+        .reduce((sum, t) => {
+          if (type === 'Balance') {
+            return sum + (t.type === 'Income' ? t.amount : -t.amount);
+          }
+          return sum + t.amount;
+        }, 0);
     });
   };
 
@@ -80,7 +85,7 @@ export function SummaryCards() {
       value: balance,
       icon: FiDollarSign,
       color: '#818CF8',
-      trend: [12000, 13500, 12800, 14200, 13800, 14500, balance],
+      trend: getTrendData('Balance'),
       description: 'Available liquid assets',
     },
     {
@@ -88,7 +93,7 @@ export function SummaryCards() {
       value: totalIncome,
       icon: FiArrowUpRight,
       color: '#10B981',
-      trend: [20000, 21000, 20500, 22000, 21500, 22200, totalIncome],
+      trend: getTrendData('Income'),
       description: 'Combined monthly revenue',
     },
     {
@@ -96,7 +101,7 @@ export function SummaryCards() {
       value: totalExpense,
       icon: FiArrowDownRight,
       color: '#F43F5E',
-      trend: [7000, 7500, 7200, 8000, 7800, 8100, totalExpense],
+      trend: getTrendData('Expense'),
       description: 'Scheduled & ad-hoc costs',
     },
   ];

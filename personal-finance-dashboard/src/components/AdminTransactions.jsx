@@ -25,7 +25,14 @@ export function AdminTransactions() {
     sortBy,
     setSortBy,
     deleteTransaction,
+    clearAllTransactions,
   } = useStore();
+
+  const handleReset = () => {
+    if (window.confirm('Are you sure you want to reset all data? This action cannot be undone.')) {
+      clearAllTransactions();
+    }
+  };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTransaction, setEditingTransaction] = useState(null);
@@ -207,21 +214,29 @@ export function AdminTransactions() {
               </button>
             </div>
           </div>
-
-          <button
-            onClick={() => {
-              setEditingTransaction(null);
-              setIsModalOpen(true);
-            }}
-            className="w-full xl:w-auto flex items-center justify-center gap-2 px-5 py-2.5 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer shadow-lg whitespace-nowrap hover:scale-[1.02] active:scale-[0.98]"
-            style={{
-              background: 'linear-gradient(135deg, #6366F1, #818CF8)',
-              boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
-            }}
-          >
-            <FiPlus className="w-4 h-4" />
-            Add Transaction
-          </button>
+          <div className="flex flex-col sm:flex-row gap-3 w-full xl:w-auto">
+            <button
+              onClick={handleReset}
+              className="flex items-center justify-center gap-2 px-5 py-2.5 bg-rose-500/10 text-rose-500 border border-rose-500/20 rounded-xl text-sm font-semibold transition-all cursor-pointer hover:bg-rose-500/20 active:scale-[0.98]"
+            >
+              <FiTrash2 className="w-4 h-4" />
+              Reset All
+            </button>
+            <button
+              onClick={() => {
+                setEditingTransaction(null);
+                setIsModalOpen(true);
+              }}
+              className="flex items-center justify-center gap-2 px-5 py-2.5 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer shadow-lg whitespace-nowrap hover:scale-[1.02] active:scale-[0.98]"
+              style={{
+                background: 'linear-gradient(135deg, #6366F1, #818CF8)',
+                boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
+              }}
+            >
+              <FiPlus className="w-4 h-4" />
+              Add Transaction
+            </button>
+          </div>
         </div>
 
         {/* Table */}

@@ -1,11 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { dummyTransactions } from '@/data/dummyData';
 
 export const useStore = create(
   persist(
     (set) => ({
-      transactions: dummyTransactions,
+      transactions: [],
       role: 'admin',
       searchQuery: '',
       activeCategory: 'All',
@@ -17,6 +16,7 @@ export const useStore = create(
         })),
       deleteTransaction: (id) =>
         set((state) => ({ transactions: state.transactions.filter((t) => t.id !== id) })),
+      clearAllTransactions: () => set({ transactions: [] }),
       setRole: (role) => set({ role }),
       setSearchQuery: (searchQuery) => set({ searchQuery }),
       setActiveCategory: (activeCategory) => set({ activeCategory }),
