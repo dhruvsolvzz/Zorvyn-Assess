@@ -1,17 +1,15 @@
-# Smart Finance Dashboard 🚀
+# Smart Finance Dashboard 
 
 A premium, high-fidelity personal finance dashboard built with **React**, **Vite**, and **GSAP**. Featuring a modern bento-grid layout, smooth scrolling, and interactive data visualizations.
 
 
-## ✨ Features
-
+##  Features
 - **Modern Bento Grid Layout**: Organized and visually appealing data presentation.
 - **GSAP Animations**: Fluid transitions and high-performance motion graphics.
 - **Interactive Charts**: Real-time financial insights using Recharts.
 - **Smooth Scrolling**: Lenis-powered scroll experience for premium feel.
 - **Responsive Design**: Fully optimized for mobile, tablet, and desktop.
 - **Glassmorphism UI**: Sleek, modern aesthetic with subtle blurs and gradients.
-
 ## 🛠️ Tech Stack
 
 - **Framework**: [React 19](https://react.dev/)
@@ -32,7 +30,7 @@ A premium, high-fidelity personal finance dashboard built with **React**, **Vite
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/personal-finance-dashboard.git
+   git clone https://github.com/dhruvsolvzz/Zorvyn-Assess/tree/main/personal-finance-dashboard
    cd personal-finance-dashboard
    ```
 
@@ -46,7 +44,7 @@ A premium, high-fidelity personal finance dashboard built with **React**, **Vite
    npm run dev
    ```
 
-## 📦 Deployment
+##  Deployment
 
 ### Deploy to Vercel
 
@@ -56,7 +54,7 @@ The project is pre-configured for **Vercel** with optimized routing and performa
 2. Run `vercel` in the project root.
 3. Follow the prompts to deploy.
 
-## 📈 Monitoring
+##  Monitoring
 
 This project includes built-in support for:
 - **Vercel Analytics**: Insights into user behavior.

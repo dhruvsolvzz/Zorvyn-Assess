@@ -95,18 +95,18 @@ export function UserTransactions() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex items-center gap-4 p-4 rounded-xl border bg-card/60 backdrop-blur-sm">
           <div className="p-2.5 rounded-xl bg-emerald-500/10">
-            <FiTrendingUp className="w-5 h-5 text-emerald-400" />
+            <FiTrendingUp className="w-5 h-5 text-emerald-400 cursor-pointer" />
           </div>
           <div>
             <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">
               Total Income
             </p>
-            <CurrencyDisplay 
-              amount={totalIncome} 
-              type="Income" 
-              showSign={true} 
-              size="lg" 
-              className="text-emerald-500" 
+            <CurrencyDisplay
+              amount={totalIncome}
+              type="Income"
+              showSign={true}
+              size="lg"
+              className="text-emerald-500"
             />
           </div>
         </div>
@@ -118,12 +118,12 @@ export function UserTransactions() {
             <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">
               Total Expenses
             </p>
-            <CurrencyDisplay 
-              amount={totalExpense} 
-              type="Expense" 
-              showSign={true} 
-              size="lg" 
-              className="text-rose-500" 
+            <CurrencyDisplay
+              amount={totalExpense}
+              type="Expense"
+              showSign={true}
+              size="lg"
+              className="text-rose-500"
             />
           </div>
         </div>
@@ -206,17 +206,16 @@ export function UserTransactions() {
                     </span>
                   </div>
                   <span
-                    className={`text-lg font-black tracking-tight ${
-                      isIncome
+                    className={`text-lg font-black tracking-tight ${isIncome
                         ? 'text-emerald-500 dark:text-emerald-400'
                         : 'text-foreground'
-                    }`}
+                      }`}
                   >
-                    <CurrencyDisplay 
-                      amount={t.amount} 
-                      type={t.type} 
-                      showSign={true} 
-                      size="lg" 
+                    <CurrencyDisplay
+                      amount={t.amount}
+                      type={t.type}
+                      showSign={true}
+                      size="lg"
                     />
                   </span>
                 </div>
@@ -232,9 +231,8 @@ export function UserTransactions() {
                   </span>
                   <span className="mx-1 text-border">·</span>
                   <span
-                    className={`text-xs font-bold ${
-                      isIncome ? 'text-emerald-500' : 'text-rose-500'
-                    }`}
+                    className={`text-xs font-bold ${isIncome ? 'text-emerald-500' : 'text-rose-500'
+                      }`}
                   >
                     {t.type}
                   </span>
