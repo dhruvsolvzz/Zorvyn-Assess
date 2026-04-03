@@ -109,7 +109,6 @@ export function TransactionModal({ isOpen, onClose, transactionToEdit }) {
       });
     } else {
       addTransaction({
-        id: crypto.randomUUID(),
         date,
         amount: parseFloat(amount),
         category,

@@ -1,7 +1,7 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FiCreditCard, FiDownload } from 'react-icons/fi';
-import { Sheet, SheetContent, SheetFooter } from '@/components/ui/sheet';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { MenuToggle } from '@/components/ui/menu-toggle';
 import { ToggleTheme } from '@/components/ui/toggle-theme';
@@ -32,7 +32,6 @@ function AnimatedRoleToggle({ role, setRole, className = '' }) {
       return;
     }
 
-    // Elastic pill slide
     gsap.to(pillRef.current, {
       x,
       width,
@@ -40,7 +39,6 @@ function AnimatedRoleToggle({ role, setRole, className = '' }) {
       ease: 'elastic.out(1, 0.75)',
     });
 
-    // Scale bounce on the active button text
     gsap.fromTo(
       target,
       { scale: 0.92 },
@@ -49,7 +47,6 @@ function AnimatedRoleToggle({ role, setRole, className = '' }) {
   }, [role]);
 
   useEffect(() => {
-    // Small delay to ensure DOM is measured properly  
     const id = requestAnimationFrame(animatePill);
     return () => cancelAnimationFrame(id);
   }, [animatePill]);
@@ -59,7 +56,6 @@ function AnimatedRoleToggle({ role, setRole, className = '' }) {
       ref={containerRef}
       className={`relative flex items-center gap-0 bg-muted/80 border rounded-md p-1 ${className}`}
     >
-      {/* Sliding pill background */}
       <div
         ref={pillRef}
         className="absolute top-1 bottom-1 rounded bg-background shadow-sm"
@@ -69,7 +65,7 @@ function AnimatedRoleToggle({ role, setRole, className = '' }) {
       <button
         ref={viewerRef}
         onClick={() => setRole('viewer')}
-        className={`relative z-10 px-3 py-1 text-xs font-medium rounded transition-colors duration-200 ${
+        className={`relative z-10 px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded transition-colors duration-200 ${
           role === 'viewer'
             ? 'text-foreground'
             : 'text-muted-foreground hover:text-foreground'
@@ -80,7 +76,7 @@ function AnimatedRoleToggle({ role, setRole, className = '' }) {
       <button
         ref={adminRef}
         onClick={() => setRole('admin')}
-        className={`relative z-10 px-3 py-1 text-xs font-medium rounded transition-colors duration-200 ${
+        className={`relative z-10 px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded transition-colors duration-200 ${
           role === 'admin'
             ? 'text-foreground'
             : 'text-muted-foreground hover:text-foreground'
@@ -93,8 +89,8 @@ function AnimatedRoleToggle({ role, setRole, className = '' }) {
 }
 
 export function SimpleHeader() {
-  const [open, setOpen] = React.useState(false);
-  const { role, setRole, transactions } = useStore();
+  const [open, setOpen] = useState(false);
+  const { transactions, role, setRole } = useStore();
   const location = useLocation();
 
   const handleExport = () => {
@@ -115,13 +111,14 @@ export function SimpleHeader() {
   return (
     <header className="bg-background/95 supports-backdrop-filter:bg-background/80 sticky top-0 z-50 w-full border-b backdrop-blur-lg">
       <nav className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between px-4">
-        <Link to="/" className="flex items-center gap-2 no-underline">
-          <div className="p-1.5 rounded-lg" style={{ backgroundColor: 'var(--primary)' }}>
+        <Link to="/" className="flex items-center gap-2 no-underline group">
+          <div className="p-1.5 rounded-lg transition-transform group-hover:scale-110" style={{ backgroundColor: 'var(--primary)' }}>
             <FiCreditCard className="size-4 text-white" />
           </div>
-          <p className="font-mono text-lg font-bold">FinDash</p>
+          <p className="font-mono text-lg font-bold tracking-tighter">Zorvyn.</p>
         </Link>
 
+        {/* Desktop Links */}
         <div className="hidden items-center gap-1 lg:flex">
           {links.map((link) => (
             <Link
@@ -136,57 +133,55 @@ export function SimpleHeader() {
           ))}
         </div>
 
-        <div className="hidden items-center gap-2 lg:flex">
+        <div className="hidden items-center gap-4 lg:flex">
           <AnimatedRoleToggle role={role} setRole={setRole} />
+          <ToggleTheme />
           <Button variant="outline" size="sm" onClick={handleExport} className="gap-2">
             <FiDownload className="size-3.5" />
             Export
           </Button>
-          <ToggleTheme />
         </div>
 
-        <Sheet open={open} onOpenChange={setOpen}>
-          <Button size="icon" variant="outline" className="lg:hidden">
-            <MenuToggle
-              strokeWidth={2.5}
-              open={open}
-              onOpenChange={setOpen}
-              className="size-6"
-            />
-          </Button>
-          <SheetContent
-            className="bg-background/95 supports-backdrop-filter:bg-background/80 gap-0 backdrop-blur-lg"
-            showClose={false}
-            side="left"
-          >
-            <div className="grid gap-y-1 overflow-y-auto px-4 pt-12 pb-5">
-              {links.map((link) => (
-                <Link
-                  key={link.label}
-                  className={buttonVariants({
-                    variant: location.pathname === link.to ? 'secondary' : 'ghost',
-                    className: 'justify-start',
-                  })}
-                  to={link.to}
-                  onClick={() => setOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <div className="my-3 border-t" />
-              <AnimatedRoleToggle role={role} setRole={setRole} className="w-fit" />
-              <div className="mt-2">
-                <ToggleTheme />
+        {/* Mobile Nav */}
+        <div className="flex items-center gap-2 lg:hidden">
+          <ToggleTheme />
+          <Sheet open={open} onOpenChange={setOpen}>
+            <Button size="icon" variant="outline">
+              <MenuToggle strokeWidth={2.5} open={open} onOpenChange={setOpen} className="size-6" />
+            </Button>
+            <SheetContent 
+              side="right" 
+              className="bg-background/95 supports-backdrop-filter:bg-background/80 gap-0 backdrop-blur-lg pt-12"
+              showClose={false}
+            >
+              <div className="grid gap-y-2 px-4">
+                <div className="mb-4 pb-4 border-b">
+                   <AnimatedRoleToggle role={role} setRole={setRole} className="w-fit" />
+                </div>
+                {links.map((link) => (
+                  <Link
+                    key={link.label}
+                    className={buttonVariants({
+                      variant: location.pathname === link.to ? 'secondary' : 'ghost',
+                      className: 'justify-start font-bold',
+                    })}
+                    to={link.to}
+                    onClick={() => setOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                
+                <div className="my-6 border-t" />
+                
+                <Button variant="outline" onClick={handleExport} className="gap-2 w-full">
+                  <FiDownload className="size-4" />
+                  Export JSON
+                </Button>
               </div>
-            </div>
-            <SheetFooter>
-              <Button variant="outline" onClick={handleExport} className="gap-2 w-full">
-                <FiDownload className="size-4" />
-                Export JSON
-              </Button>
-            </SheetFooter>
-          </SheetContent>
-        </Sheet>
+            </SheetContent>
+          </Sheet>
+        </div>
       </nav>
     </header>
   );

@@ -1,4 +1,5 @@
 import { useMemo, useRef, useEffect } from 'react';
+import { CurrencyDisplay } from './ui/CurrencyDisplay';
 import { useStore } from '../store/useStore';
 import { FiSearch, FiFilter, FiTrendingUp, FiTrendingDown, FiCalendar, FiTag } from 'react-icons/fi';
 import { format, parseISO } from 'date-fns';
@@ -100,9 +101,13 @@ export function UserTransactions() {
             <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">
               Total Income
             </p>
-            <p className="text-xl font-black tracking-tight text-emerald-500">
-              +${totalIncome.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-            </p>
+            <CurrencyDisplay 
+              amount={totalIncome} 
+              type="Income" 
+              showSign={true} 
+              size="lg" 
+              className="text-emerald-500" 
+            />
           </div>
         </div>
         <div className="flex items-center gap-4 p-4 rounded-xl border bg-card/60 backdrop-blur-sm">
@@ -113,9 +118,13 @@ export function UserTransactions() {
             <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">
               Total Expenses
             </p>
-            <p className="text-xl font-black tracking-tight text-rose-500">
-              -${totalExpense.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-            </p>
+            <CurrencyDisplay 
+              amount={totalExpense} 
+              type="Expense" 
+              showSign={true} 
+              size="lg" 
+              className="text-rose-500" 
+            />
           </div>
         </div>
       </div>
@@ -203,7 +212,12 @@ export function UserTransactions() {
                         : 'text-foreground'
                     }`}
                   >
-                    {isIncome ? '+' : '-'}${t.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    <CurrencyDisplay 
+                      amount={t.amount} 
+                      type={t.type} 
+                      showSign={true} 
+                      size="lg" 
+                    />
                   </span>
                 </div>
 

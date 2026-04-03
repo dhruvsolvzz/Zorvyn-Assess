@@ -1,7 +1,15 @@
+import { useEffect } from 'react';
+import { useStore } from '../store/useStore';
 import { TransactionPageSwitcher } from '../components/TransactionPageSwitcher';
 import { PageTransition } from '../components/PageTransition';
 
 export function TransactionsPage() {
+  const fetchTransactions = useStore((state) => state.fetchTransactions);
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [fetchTransactions]);
+
   return (
     <PageTransition>
       <PageTransition.Item>

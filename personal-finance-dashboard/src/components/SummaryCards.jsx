@@ -1,4 +1,5 @@
 import { FiArrowDownRight, FiArrowUpRight, FiDollarSign } from 'react-icons/fi';
+import { CurrencyDisplay } from './ui/CurrencyDisplay';
 import { useStore } from '../store/useStore';
 import { Card, CardContent } from './ui/card';
 import { BorderBeam } from './ui/border-beam';
@@ -72,13 +73,6 @@ export function SummaryCards() {
 
   const balance = totalIncome - totalExpense;
 
-  const formatCurrency = (amount) =>
-    new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      maximumFractionDigits: 0,
-    }).format(amount);
-
   const stats = [
     {
       title: 'Total Balance',
@@ -151,12 +145,12 @@ export function SummaryCards() {
 
                 {/* Value Row */}
                 <div className="space-y-1">
-                  <h3 
-                    className="text-4xl font-black tracking-tighter"
+                  <CurrencyDisplay 
+                    amount={stat.value} 
+                    size="2xl"
+                    className="text-4xl"
                     style={{ color: stat.title === 'Total Balance' ? 'inherit' : stat.color }}
-                  >
-                    {formatCurrency(stat.value)}
-                  </h3>
+                  />
                   <div className="flex items-center gap-2">
                     <span className="h-1 w-1 rounded-full bg-primary/40 animate-ping" />
                     <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">

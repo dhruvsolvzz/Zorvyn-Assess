@@ -6,7 +6,7 @@ import { RoleSwitchNotifier } from './components/RoleSwitchNotifier';
 
 function App() {
   useLenis();
-
+  
   return (
     <div className="min-h-screen relative overflow-hidden">
       <ToastViewport />

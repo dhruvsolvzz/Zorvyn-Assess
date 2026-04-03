@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
+import { CurrencyDisplay } from './ui/CurrencyDisplay';
 import { useStore } from '../store/useStore';
 import {
   FiSearch,
@@ -297,8 +298,12 @@ export function AdminTransactions() {
                         t.type === 'Income' ? 'text-emerald-600 dark:text-emerald-400' : ''
                       }`}
                     >
-                      {t.type === 'Income' ? '+' : '-'}$
-                      {t.amount.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                      <CurrencyDisplay 
+                        amount={t.amount} 
+                        type={t.type} 
+                        showSign={true} 
+                        size="md" 
+                      />
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">

@@ -111,9 +111,6 @@ export const Hero195 = () => {
               <span>View Dashboard</span>
               <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button size="lg" className="gap-2 hover:scale-105 active:scale-95 transition-all" variant="outline">
-              <span>Book Demo</span>
-            </Button>
           </div>
         </div>
       </TracingBeam>

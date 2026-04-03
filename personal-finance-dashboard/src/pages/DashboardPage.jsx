@@ -1,9 +1,17 @@
+import { useEffect } from 'react';
+import { useStore } from '../store/useStore';
 import { SummaryCards } from '../components/SummaryCards';
 import { InsightsPanel } from '../components/InsightsPanel';
 import { Charts } from '../components/Charts';
 import { PageTransition } from '../components/PageTransition';
 
 export function DashboardPage() {
+  const fetchTransactions = useStore((state) => state.fetchTransactions);
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [fetchTransactions]);
+
   return (
     <PageTransition>
       <PageTransition.Item>
