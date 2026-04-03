@@ -62,32 +62,32 @@
 
   /* ─── Zenith Pro Dark Mode ───────────────────────────────────────────── */
   .dark {
-    --background: #09090B;
-    --foreground: #F8FAFC;
+    --background: #0F1117;
+    --foreground: #E8ECF4;
 
-    --card: #0C0C0F;
-    --card-foreground: #F8FAFC;
-    --popover: #0C0C0F;
-    --popover-foreground: #F8FAFC;
+    --card: #161921;
+    --card-foreground: #E2E6EF;
+    --popover: #1A1D27;
+    --popover-foreground: #E2E6EF;
 
-    --primary: #818CF8;
-    --primary-foreground: #09090B;
+    --primary: #9BA4F5;
+    --primary-foreground: #0F1117;
 
-    --secondary: #1E293B;
-    --secondary-foreground: #F1F5F9;
+    --secondary: #1E2230;
+    --secondary-foreground: #D5DAE6;
 
-    --muted: #111114;
-    --muted-foreground: #94A3B8;
+    --muted: #1A1D26;
+    --muted-foreground: #8891A5;
 
-    --accent: #34D399;
-    --accent-foreground: #09090B;
+    --accent: #5EDDB5;
+    --accent-foreground: #0F1117;
 
-    --destructive: #991B1B;
-    --destructive-foreground: #F8FAFC;
+    --destructive: #E06370;
+    --destructive-foreground: #FEF2F2;
 
-    --border: #1E1E24;
-    --input: #1E1E24;
-    --ring: #818CF8;
+    --border: #252A37;
+    --input: #1E2230;
+    --ring: #9BA4F5;
   }
 }
 
@@ -105,8 +105,8 @@
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
 .dark .glass {
-  background: rgba(12, 12, 15, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(22, 25, 33, 0.75);
+  border: 1px solid rgba(155, 164, 245, 0.06);
 }
 
 .glass-premium {
@@ -114,6 +114,11 @@
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+.dark .glass-premium {
+  background: linear-gradient(135deg, rgba(155, 164, 245, 0.06), rgba(94, 221, 181, 0.03));
+  border: 1px solid rgba(155, 164, 245, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
 }
 
 @keyframes border-beam {

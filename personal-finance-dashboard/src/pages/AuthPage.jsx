@@ -145,7 +145,7 @@ export function AuthPage() {
                   disabled={loading}
                   className="w-full py-6 rounded-xl font-bold gap-2 group shadow-xl shadow-primary/20"
                   style={{
-                    background: 'linear-gradient(135deg, #6366F1, #818CF8)',
+                    background: 'linear-gradient(135deg, #7B84E8, #9BA4F5)',
                   }}
                 >
                   <span>{loading ? 'Processing...' : isLogin ? 'Sign In' : 'Create Vault'}</span>

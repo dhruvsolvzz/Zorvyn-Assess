@@ -217,7 +217,7 @@ export function TransactionModal({ isOpen, onClose, transactionToEdit }) {
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors cursor-pointer shadow-md shadow-blue-500/20"
+              className="flex-1 px-4 py-2.5 bg-[#7B84E8] hover:bg-[#6B74D8] text-white rounded-lg font-medium transition-colors cursor-pointer shadow-md shadow-[#9BA4F5]/15"
             >
               Save
             </button>

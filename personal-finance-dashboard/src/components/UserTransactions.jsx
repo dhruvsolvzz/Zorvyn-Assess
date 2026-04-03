@@ -6,21 +6,21 @@ import { format, parseISO } from 'date-fns';
 import gsap from 'gsap';
 
 const CATEGORY_COLORS = {
-  Salary: { bg: 'rgba(99,102,241,0.12)', text: '#818CF8', border: 'rgba(99,102,241,0.25)' },
-  Freelance: { bg: 'rgba(139,92,246,0.12)', text: '#A78BFA', border: 'rgba(139,92,246,0.25)' },
-  Housing: { bg: 'rgba(244,63,94,0.12)', text: '#FB7185', border: 'rgba(244,63,94,0.25)' },
-  Food: { bg: 'rgba(245,158,11,0.12)', text: '#FBBF24', border: 'rgba(245,158,11,0.25)' },
-  Utilities: { bg: 'rgba(6,182,212,0.12)', text: '#22D3EE', border: 'rgba(6,182,212,0.25)' },
-  Transport: { bg: 'rgba(59,130,246,0.12)', text: '#60A5FA', border: 'rgba(59,130,246,0.25)' },
-  Shopping: { bg: 'rgba(236,72,153,0.12)', text: '#F472B6', border: 'rgba(236,72,153,0.25)' },
-  Dining: { bg: 'rgba(251,146,60,0.12)', text: '#FB923C', border: 'rgba(251,146,60,0.25)' },
-  Health: { bg: 'rgba(16,185,129,0.12)', text: '#34D399', border: 'rgba(16,185,129,0.25)' },
-  Subscriptions: { bg: 'rgba(168,85,247,0.12)', text: '#C084FC', border: 'rgba(168,85,247,0.25)' },
-  Travel: { bg: 'rgba(20,184,166,0.12)', text: '#2DD4BF', border: 'rgba(20,184,166,0.25)' },
-  Entertainment: { bg: 'rgba(234,179,8,0.12)', text: '#FACC15', border: 'rgba(234,179,8,0.25)' },
+  Salary: { bg: 'rgba(155,164,245,0.08)', text: '#A0A8F8', border: 'rgba(155,164,245,0.15)' },
+  Freelance: { bg: 'rgba(167,139,240,0.08)', text: '#B8A4F8', border: 'rgba(167,139,240,0.15)' },
+  Housing: { bg: 'rgba(232,120,138,0.08)', text: '#E8788A', border: 'rgba(232,120,138,0.15)' },
+  Food: { bg: 'rgba(228,176,96,0.08)', text: '#E4B060', border: 'rgba(228,176,96,0.15)' },
+  Utilities: { bg: 'rgba(94,199,212,0.08)', text: '#5EC7D4', border: 'rgba(94,199,212,0.15)' },
+  Transport: { bg: 'rgba(139,147,240,0.08)', text: '#8B93F0', border: 'rgba(139,147,240,0.15)' },
+  Shopping: { bg: 'rgba(220,130,180,0.08)', text: '#DC82B4', border: 'rgba(220,130,180,0.15)' },
+  Dining: { bg: 'rgba(224,160,100,0.08)', text: '#E0A064', border: 'rgba(224,160,100,0.15)' },
+  Health: { bg: 'rgba(94,221,181,0.08)', text: '#5EDDB5', border: 'rgba(94,221,181,0.15)' },
+  Subscriptions: { bg: 'rgba(180,140,240,0.08)', text: '#B48CF0', border: 'rgba(180,140,240,0.15)' },
+  Travel: { bg: 'rgba(80,200,190,0.08)', text: '#50C8BE', border: 'rgba(80,200,190,0.15)' },
+  Entertainment: { bg: 'rgba(224,200,80,0.08)', text: '#E0C850', border: 'rgba(224,200,80,0.15)' },
 };
 
-const DEFAULT_COLOR = { bg: 'rgba(148,163,184,0.12)', text: '#94A3B8', border: 'rgba(148,163,184,0.25)' };
+const DEFAULT_COLOR = { bg: 'rgba(136,145,165,0.08)', text: '#8891A5', border: 'rgba(136,145,165,0.15)' };
 
 function getCategoryColor(category) {
   return CATEGORY_COLORS[category] || DEFAULT_COLOR;

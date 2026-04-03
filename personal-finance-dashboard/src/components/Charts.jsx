@@ -16,7 +16,7 @@ import { useStore } from '../store/useStore';
 import { useTheme } from 'next-themes';
 import { parseISO, format, compareAsc } from 'date-fns';
 
-const PIE_COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+const PIE_COLORS = ['#8B93F0', '#5EDDB5', '#E4B060', '#E8788A', '#A78BF0', '#5EC7D4'];
 
 export function Charts() {
   const transactions = useStore((state) => state.transactions);
@@ -71,8 +71,8 @@ export function Charts() {
               <AreaChart data={trendData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorBalance" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#3b82f6" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#8B93F0" stopOpacity={0.25} />
+                    <stop offset="95%" stopColor="#8B93F0" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
@@ -98,12 +98,12 @@ export function Charts() {
                     borderRadius: '8px',
                     color: tooltipText,
                   }}
-                  itemStyle={{ color: '#3b82f6', fontWeight: 600 }}
+                  itemStyle={{ color: '#8B93F0', fontWeight: 600 }}
                 />
                 <Area
                   type="monotone"
                   dataKey="balance"
-                  stroke="#3b82f6"
+                  stroke="#8B93F0"
                   strokeWidth={3}
                   fillOpacity={1}
                   fill="url(#colorBalance)"

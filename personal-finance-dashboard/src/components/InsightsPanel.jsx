@@ -4,7 +4,7 @@ import { subMonths, isSameMonth, parseISO } from 'date-fns';
 import { Card, CardContent } from './ui/card';
 import { motion } from 'framer-motion';
 
-function RadialProgress({ percentage, color = '#6366F1' }) {
+function RadialProgress({ percentage, color = '#9BA4F5' }) {
   const radius = 18;
   const circumference = 2 * Math.PI * radius;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
@@ -118,8 +118,8 @@ export function InsightsPanel() {
           <Card className="h-full border-border/30 bg-card/40 backdrop-blur-xl group hover:border-violet-500/30 transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-violet-500/10 flex items-center justify-center shrink-0 group-hover:rotate-12 transition-transform">
-                  <FiPieChart className="w-6 h-6 text-violet-400" />
+                <div className="w-12 h-12 rounded-2xl bg-violet-500/8 flex items-center justify-center shrink-0 group-hover:rotate-12 transition-transform">
+                  <FiPieChart className="w-6 h-6 text-violet-300" />
                 </div>
                 <div className="space-y-1">
                   <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
@@ -149,7 +149,7 @@ export function InsightsPanel() {
               <motion.div
                 whileHover={{ y: momTrend === 'up' ? -5 : 5 }}
                 className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
-                  momTrend === 'up' ? 'bg-rose-500/10 text-rose-400' : 'bg-emerald-500/10 text-emerald-400'
+                  momTrend === 'up' ? 'bg-rose-500/8 text-rose-300' : 'bg-emerald-500/8 text-emerald-300'
                 }`}
               >
                 {momTrend === 'up' ? <FiTrendingUp className="w-6 h-6" /> : <FiTrendingDown className="w-6 h-6" />}
@@ -175,10 +175,10 @@ export function InsightsPanel() {
         }`}>
           <CardContent className="p-6">
             <div className="flex items-center gap-4">
-              <RadialProgress 
-                percentage={budgetUsage} 
-                color={isBudgetAlert ? '#FB7185' : '#818CF8'} 
-              />
+                <RadialProgress 
+                  percentage={budgetUsage} 
+                  color={isBudgetAlert ? '#E8788A' : '#9BA4F5'} 
+                />
               <div className="space-y-1">
                 <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">
                    Health Index

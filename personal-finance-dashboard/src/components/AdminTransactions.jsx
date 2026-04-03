@@ -145,8 +145,8 @@ export function AdminTransactions() {
         ref={headerRef}
         className="flex items-center gap-3 p-4 rounded-xl border bg-card/60 backdrop-blur-sm"
         style={{
-          borderColor: 'rgba(99,102,241,0.2)',
-          background: 'linear-gradient(135deg, rgba(99,102,241,0.05), transparent)',
+          borderColor: 'rgba(155,164,245,0.15)',
+          background: 'linear-gradient(135deg, rgba(155,164,245,0.04), transparent)',
         }}
       >
         <div className="p-2.5 rounded-xl bg-primary/10">
@@ -170,7 +170,7 @@ export function AdminTransactions() {
       <div
         ref={toolbarRef}
         className="card rounded-2xl shadow-sm overflow-hidden"
-        style={{ borderColor: 'rgba(99,102,241,0.15)' }}
+        style={{ borderColor: 'rgba(155,164,245,0.1)' }}
       >
         <div className="p-5 border-b flex flex-col xl:flex-row gap-4 justify-between items-center">
           <div className="flex-1 w-full flex flex-col sm:flex-row gap-3">
@@ -230,8 +230,8 @@ export function AdminTransactions() {
               }}
               className="flex items-center justify-center gap-2 px-5 py-2.5 text-white rounded-xl text-sm font-semibold transition-all cursor-pointer shadow-lg whitespace-nowrap hover:scale-[1.02] active:scale-[0.98]"
               style={{
-                background: 'linear-gradient(135deg, #6366F1, #818CF8)',
-                boxShadow: '0 4px 16px rgba(99,102,241,0.3)',
+                background: 'linear-gradient(135deg, #7B84E8, #9BA4F5)',
+                boxShadow: '0 4px 16px rgba(155,164,245,0.2)',
               }}
             >
               <FiPlus className="w-4 h-4" />

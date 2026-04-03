@@ -51,42 +51,42 @@ const features = [
     title: 'Real-Time Insights',
     description:
       'Watch your spending patterns evolve in real-time with intelligent trend analysis and predictive forecasting.',
-    color: '#10B981',
+    color: '#5EDDB5',
   },
   {
     icon: FiPieChart,
     title: 'Smart Categorization',
     description:
       'Transactions auto-categorize using rule-based intelligence. No manual tagging — just clarity.',
-    color: '#6366F1',
+    color: '#9BA4F5',
   },
   {
     icon: FiShield,
     title: 'Bank-Grade Security',
     description:
       'All data stays local in your browser with AES-256 encryption. Zero cloud storage, zero risk.',
-    color: '#F59E0B',
+    color: '#E4B060',
   },
   {
     icon: FiZap,
     title: 'Blazing Performance',
     description:
       'Built on modern React with GSAP-powered animations. Sub-100ms interactions, buttery smooth UI.',
-    color: '#EC4899',
+    color: '#DC82B4',
   },
   {
     icon: FiLock,
     title: 'Role-Based Access',
     description:
       'Switch between Admin and Viewer modes instantly. Control who can create, edit, or delete transactions.',
-    color: '#8B5CF6',
+    color: '#A78BF0',
   },
   {
     icon: FiBarChart2,
     title: 'Visual Analytics',
     description:
       'Interactive charts, sparklines, and radial gauges bring your financial data to life at a glance.',
-    color: '#06B6D4',
+    color: '#5EC7D4',
   },
 ];
 
